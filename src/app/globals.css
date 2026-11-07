@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palette: cool off-white, concrete, charcoal, one accent (burnt construction orange). */
+  --color-paper: #f4f5f2;
+  --color-mist: #e7e8e3;
+  --color-charcoal: #1c1e1c;
+  --color-charcoal-soft: #262924;
+  --color-concrete: #8b8d86;
+  --color-line: #d7d9d2;
+  --color-line-dark: rgba(244, 245, 242, 0.16);
+  --color-rust: #b6481a;
+  --color-rust-hi: #cb5a26;
+  --color-ink: #16180f;
+
+  --font-sans: "Archivo Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-stretch: 100%;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background-color: var(--color-rust);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-rust);
+    outline-offset: 3px;
+  }
+
+  .on-dark :focus-visible {
+    outline-color: var(--color-rust-hi);
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Variable-width axis of Archivo: used sparingly for display numerals and the wordmark. */
+  .fs-expanded {
+    font-stretch: 122%;
+  }
+  .fs-condensed {
+    font-stretch: 88%;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* The one orchestrated motion on the page: the hero's dimensioned elevation draws in once. */
+@keyframes line-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.draw-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: line-draw 1.4s cubic-bezier(0.45, 0.05, 0.25, 1) forwards;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .draw-line {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
